@@ -1,0 +1,52 @@
+﻿<Window x:Class="Wpf.Animation.Storyboard.Playback.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf.Animation.Storyboard.Playback"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Triggers>
+        <EventTrigger SourceName="cmdStart" RoutedEvent="Button.Click">
+            <BeginStoryboard Name="fadeStoryboardBegin">
+                <Storyboard x:Name="fadeStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="PurpleRectangle" 
+                                     Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:10">
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="cmdPause" RoutedEvent="Button.Click">
+            <PauseStoryboard BeginStoryboardName="fadeStoryboardBegin"></PauseStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="cmdResume" RoutedEvent="Button.Click">
+            <ResumeStoryboard BeginStoryboardName="fadeStoryboardBegin"></ResumeStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="cmdStop" RoutedEvent="Button.Click">
+            <StopStoryboard BeginStoryboardName="fadeStoryboardBegin"></StopStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="cmdMiddle" RoutedEvent="Button.Click">
+            <SeekStoryboard BeginStoryboardName="fadeStoryboardBegin" Offset="0:0:5"></SeekStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Rectangle Width="300" Height="300" Fill="Aqua" Name="AquaRectangle"></Rectangle>
+        <Rectangle Width="300" Height="300" Fill="Purple" Name="PurpleRectangle"></Rectangle>
+        <StackPanel Grid.Row="1">
+            <TextBlock x:Name="lblProgress"></TextBlock>
+            <ProgressBar x:Name="prgProgress" Minimum="0" Maximum="1"></ProgressBar>
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <Button Name="cmdStart">Start</Button>
+                <Button Name="cmdPause">Pause</Button>
+                <Button Name="cmdResume">Resume</Button>
+                <Button Name="cmdStop">Stop</Button>
+                <Button Name="cmdMiddle">Move To Middle</Button>
+            </StackPanel>
+            <Slider x:Name="sldSpeed" Value="0" Minimum="0" Maximum="3" Interval="1"></Slider>
+        </StackPanel>
+    </Grid>
+</Window>
